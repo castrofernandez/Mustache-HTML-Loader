@@ -1,3 +1,5 @@
+var languages = ['en', 'es', 'fr'];
+
 (function loadPartials() {
 	var partials = document.querySelectorAll('script[type=mustache-partial]');
 	
@@ -20,7 +22,14 @@
 })();
 
 function loadInternationalization(partials) {
-	var lang = document.querySelector('script[type=lang]');
+	var language = 'en';
+
+	if (window.location.hash && window.location.hash.length > 0) {
+		var hash = window.location.hash.substring(1);
+		language = hash;
+	}
+
+	var lang = document.querySelector('script[type=lang][lang=' + language + ']');
 	
 	loadFile(lang.src, function(file, request) {
 		var labels = JSON.parse(request.responseText);
